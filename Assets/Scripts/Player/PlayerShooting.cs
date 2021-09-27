@@ -1,20 +1,33 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public int damagePerShot = 20;                  
+    public int damagePerShot = 20;
+    public int magSize = 30;
+    public float reloadDelay = 2.5f;
     public float timeBetweenBullets = 0.15f;        
-    public float range = 100f;                      
+    public float range = 100f;
+    public Text ammoText;
+    public Slider reloadSlider;
 
+    int shootableMask;
+    int currentMag;
     float timer;
+    float reloadTimer;
+    float effectsDisplayTime = 0.2f;
+
+
     Ray shootRay = new Ray();
     RaycastHit shootHit;
-    int shootableMask;
+
+    bool isReloading;
+    
     ParticleSystem gunParticles;                    
     LineRenderer gunLine;                           
     AudioSource gunAudio;                           
     Light gunLight;                                 
-    float effectsDisplayTime = 0.2f;                
+               
 
     void Awake()
     {
@@ -23,21 +36,43 @@ public class PlayerShooting : MonoBehaviour
         gunLine = GetComponent<LineRenderer>();
         gunAudio = GetComponent<AudioSource>();
         gunLight = GetComponent<Light>();
+        currentMag = magSize;
     }
 
     void Update()
     {
         timer += Time.deltaTime;
+        if (isReloading)
+        {
+            reloadSlider.gameObject.SetActive(true);
+            reloadTimer += Time.deltaTime;
+            reloadSlider.value = (reloadTimer / reloadDelay) * 100;            
 
-        if (Input.GetButton("Fire1") && timer >= timeBetweenBullets)
+            if (reloadTimer >= reloadDelay)
+            {
+                isReloading = false;
+                currentMag = magSize;
+                reloadTimer = 0;
+                reloadSlider.gameObject.SetActive(false);
+            }
+        }
+
+        if (currentMag > 0 && Input.GetButton("Fire1") && timer >= timeBetweenBullets && !isReloading)
         {
             Shoot();
+        }
+
+        if (currentMag != magSize && Input.GetKey(KeyCode.R))
+        {
+            Reload();
         }
 
         if (timer >= timeBetweenBullets * effectsDisplayTime)
         {
             DisableEffects();
         }
+
+        ammoText.text = string.Format("Ammo: {0}", currentMag);
     }
 
     public void DisableEffects()
@@ -49,7 +84,7 @@ public class PlayerShooting : MonoBehaviour
     public void Shoot()
     {
         timer = 0f;
-
+        currentMag--;
         gunAudio.Play();
 
         gunLight.enabled = true;
@@ -79,4 +114,10 @@ public class PlayerShooting : MonoBehaviour
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
         }
     }
+
+    private void Reload()
+    {
+        isReloading = true;
+    }
+
 }
