@@ -6,10 +6,10 @@ public class PlayerShooting : MonoBehaviour
     public float timeBetweenBullets = 0.15f;        
     public float range = 100f;                      
 
-    float timer;                                    
-    Ray shootRay;                                   
-    RaycastHit shootHit;                            
-    int shootableMask;                             
+    float timer;
+    Ray shootRay = new Ray();
+    RaycastHit shootHit;
+    int shootableMask;
     ParticleSystem gunParticles;                    
     LineRenderer gunLine;                           
     AudioSource gunAudio;                           
@@ -46,7 +46,7 @@ public class PlayerShooting : MonoBehaviour
         gunLight.enabled = false;
     }
 
-    void Shoot()
+    public void Shoot()
     {
         timer = 0f;
 

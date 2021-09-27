@@ -32,7 +32,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (isSinking)
         {
-            transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
+            transform.Translate (sinkSpeed * Time.deltaTime * -Vector3.up);
         }
     }
 
@@ -74,7 +74,7 @@ public class EnemyHealth : MonoBehaviour
         GetComponent<UnityEngine.AI.NavMeshAgent> ().enabled = false;
         GetComponent<Rigidbody> ().isKinematic = true;
         isSinking = true;
-        //ScoreManager.score += scoreValue;
+        ScoreManager.score += scoreValue;
         Destroy (gameObject, 2f);
     }
 }
