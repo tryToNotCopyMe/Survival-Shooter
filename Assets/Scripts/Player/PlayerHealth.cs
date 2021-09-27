@@ -63,6 +63,17 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth >= startingHealth)
+        {
+            currentHealth = startingHealth;
+        }
+
+        healthSlider.value = currentHealth;
+    }
+
 
     void Death()
     {

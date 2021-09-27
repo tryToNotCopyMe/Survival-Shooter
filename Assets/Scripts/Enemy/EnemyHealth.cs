@@ -59,7 +59,7 @@ public class EnemyHealth : MonoBehaviour
     void Death ()
     {
         isDead = true;
-
+        PickupManager.Instance.SpawnPickupItem(transform);
         capsuleCollider.isTrigger = true;
 
         anim.SetTrigger ("Dead");

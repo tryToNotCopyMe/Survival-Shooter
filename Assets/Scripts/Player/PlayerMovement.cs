@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody playerRB;
     int floorMask;
     float camRayLength = 100f;
+    float buffDuration;
+    bool isBuffed = false;
 
     private void Awake()
     {
@@ -56,5 +59,20 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsWalking", isWalking);
     }
 
+    public void Buff(float duration, float multiplier)
+    {
+        if (isBuffed) return;
+        buffDuration = duration;
+        isBuffed = true;
+        StartCoroutine(GetSpeedBuff(multiplier));
 
+    }
+
+    private IEnumerator GetSpeedBuff(float multiplier)
+    {
+        speed *= multiplier;
+        yield return new WaitForSeconds(buffDuration);
+        speed /= multiplier;
+        isBuffed = false;
+    }
 }
