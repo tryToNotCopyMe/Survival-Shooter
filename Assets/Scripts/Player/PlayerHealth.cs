@@ -63,18 +63,6 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
-    {
-        currentHealth += amount;
-        if (currentHealth >= startingHealth)
-        {
-            currentHealth = startingHealth;
-        }
-
-        healthSlider.value = currentHealth;
-    }
-
-
     void Death()
     {
         isDead = true;
@@ -89,4 +77,20 @@ public class PlayerHealth : MonoBehaviour
         playerMovement.enabled = false;
         playerShooting.enabled = false;
     }
+
+
+    #region tambahan
+
+    // memberi player health berdasar amount, namun tidak melebihi batas 
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth >= startingHealth)
+        {
+            currentHealth = startingHealth;
+        }
+
+        healthSlider.value = currentHealth;
+    }
+    #endregion
 }

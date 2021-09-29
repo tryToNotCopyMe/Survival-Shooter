@@ -19,10 +19,12 @@ public class PickupManager : MonoBehaviour
         }
     }
 
-    private float baseChance = 1f;
+    private float baseChance = 0.1f;
     public GameObject[] pickupPrefabs;
-    public float spawnItemChance = 1f;
+    public float spawnItemChance = 0.1f;
 
+
+    // mengspawn pickup item dari object musuh dengan random chance
     public void SpawnPickupItem(Transform spawnPos)
     {
         float rand = Random.Range(0f, 1f);

@@ -16,6 +16,8 @@ public class PickupItem : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+
+    // menonaktifkan gravity pickup item ketika menyentuh tanah dan menyalakan trigger colldiernya
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -28,6 +30,8 @@ public class PickupItem : MonoBehaviour
         }
     }
 
+    // mengecek kalau trigger pickup item dimasuki oleh collider player yang tidak memiliki trigger(capsule), 
+    // maka akan memberikan player buff/heal
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && !other.isTrigger)
@@ -43,10 +47,10 @@ public class PickupItem : MonoBehaviour
     {
         switch (itemType) {
             case ItemType.MedKit:
-                playerHealth.Heal(20);
+                playerHealth.Heal(20); // shouldn't be hardcode this
                 break;
             case ItemType.Soda:
-                playerMovement.Buff(6f, 1.8f);
+                playerMovement.Buff(6f, 1.8f); // this too
                 break;
         }
 

@@ -59,6 +59,10 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsWalking", isWalking);
     }
 
+
+    #region tambahan
+
+    // memberi player speed buff, dan mengakhiri buff tersebut ketika durasi nya sudah habis
     public void Buff(float duration, float multiplier)
     {
         if (isBuffed) return;
@@ -68,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    
     private IEnumerator GetSpeedBuff(float multiplier)
     {
         speed *= multiplier;
@@ -75,4 +80,6 @@ public class PlayerMovement : MonoBehaviour
         speed /= multiplier;
         isBuffed = false;
     }
+
+    #endregion
 }

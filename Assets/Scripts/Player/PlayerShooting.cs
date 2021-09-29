@@ -39,14 +39,19 @@ public class PlayerShooting : MonoBehaviour
         currentMag = magSize;
     }
 
+
     void Update()
     {
         timer += Time.deltaTime;
+
+        // mengecek jika player sedang reload, maka akan melakukan sequence reload
+
         if (isReloading)
         {
             reloadSlider.gameObject.SetActive(true);
             reloadTimer += Time.deltaTime;
             reloadSlider.value = (reloadTimer / reloadDelay) * 100;            
+
 
             if (reloadTimer >= reloadDelay)
             {
